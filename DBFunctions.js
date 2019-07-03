@@ -35,7 +35,8 @@ module.exports = {
             await delay(10);
         }
         return res;
+    },
+    setMax: function(redis, client, region, max) {
+        client.set("max_"+region, max, redis.print);
     }
-
-
 };
