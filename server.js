@@ -52,5 +52,19 @@ app.get('/', async function (req, res) {
 app.get('/man', function (req, res) {
     res.send('USB');
 });
+app.get('/free',async function(req,res) {
+free_parking(req.query.region);
+var val = await getRegionParking(req.query.region);
+res.send(val);
+})
+app.get('/set_max',function(req,res){
+    helpers.setMax(redis,client,req.query.region,50);
+})
+app.get('/capture',async function(req,res) {
+    console.log(req.query.region);
+    capture_parking(req.query.region);
+    var val = await getRegionParking(req.query.region);
+    res.send(val);
+    })
 console.log('Server Started..');
 app.listen(3000);
