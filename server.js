@@ -20,7 +20,8 @@ free_gen_park: async function (redis,client,general,date) {
     DBFunctions.setGenStat(redis,client,general,date,"FREE",'');
 },
 capture_gen_park: async function (redis,client,general,date,user) {
-    DBFunctions.setGenStat(redis,client,general,date,"CAPTURED",user);
+    var status = await DBFunctions.getGenStatus(client,general,date);
+    if (status.substring(0,8)!="CAPTURED") { DBFunctions.setGenStat(redis,client,general,date,"CAPTURED",user); }
 },
 getRegionParking: async function (client,region) {
     var ret = await DBFunctions.getStatus(client, region);
