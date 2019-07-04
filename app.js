@@ -16,6 +16,8 @@ app.get('/free',async function(req,res) {
     else if (typeof req.query.general != 'undefined')
     {
         server.free_gen_park(redis,client,req.query.general,'11/11/1999');
+        var val = await server.getGeneralParking(client,req.query.general,'11/11/1999');
+        res.send(val);
     }
 })
 app.get('/set_max',function(req,res){
@@ -32,6 +34,8 @@ app.get('/capture',async function(req,res) {
              typeof req.query.user != 'undefined')
     {
         server.capture_gen_park(redis,client,req.query.general,'11/11/1999',req.query.user);
+        var val = await server.getGeneralParking(client,req.query.general,'11/11/1999');
+        res.send(val);
     }
     })
 app.get('/get_region_status',async function(req,res){
@@ -40,6 +44,7 @@ app.get('/get_region_status',async function(req,res){
 })
 app.get('/get_general_status',async function(req,res){
     var general_status = await server.getGeneralParking(client,req.query.general,'11/11/1999');
+    res.send(general_status);
 })
 console.log('Server Started..');
 app.listen(3000);
